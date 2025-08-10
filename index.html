@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latest Meepo Dota 2 Games by Meepoku</title>
+    <meta name="description" content="Watch the latest Meepo gameplay videos from Meepoku, one of the best Meepo players in Dota 2">
+    <style>
+        :root {
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #00b4d8;
+            --text-color: #e6f1ff;
+            --background-color: #0a0a1a;
+            --card-bg: rgba(30, 30, 60, 0.8);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--background-color);
+            background-image: url('https://wallpapercave.com/wp/wp6746682.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 10, 26, 0.9);
+            z-index: -1;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-color);
+            text-align: center;
+            padding: 2rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+            border-bottom: 1px solid rgba(0, 180, 216, 0.3);
+        }
+        
+        .container {
+            max-width: 1400px; /* Slightly wider to accommodate 6 videos */
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .videos-container {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem; /* Slightly smaller gap to fit more content */
+            margin: 2rem 0;
+        }
+        
+        .video-container {
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 180, 216, 0.1);
+        }
+        
+        .video-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 180, 216, 0.2);
+            border-color: rgba(0, 180, 216, 0.3);
+        }
+        
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            overflow: hidden;
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .video-info {
+            padding: 1.2rem; /* Slightly less padding to save space */
+        }
+        
+        .video-info h2 {
+            margin-top: 0;
+            color: var(--accent-color);
+            font-size: 1.2rem; /* Slightly smaller font */
+        }
+        
+        .video-date, .video-channel {
+            font-size: 0.85rem; /* Slightly smaller text */
+            color: #8b9dc7;
+            margin: 0.3rem 0; /* Reduced margin */
+        }
+        
+        .video-description {
+            margin-top: 0.8rem;
+            line-height: 1.4;
+            font-size: 0.85rem; /* Slightly smaller description */
+            max-height: 80px; /* Smaller max height */
+            overflow-y: auto;
+            color: #c7d1e0;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.5rem;
+            color: var(--accent-color);
+        }
+        
+        .error {
+            color: #ff6b6b;
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.5rem;
+        }
+        
+        .refresh-btn {
+            background-color: var(--accent-color);
+            color: #0a0a1a;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin: 1rem auto;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .refresh-btn:hover {
+            background-color: #0096c7;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 180, 216, 0.3);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            margin-top: 2rem;
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid rgba(0, 180, 216, 0.3);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .videos-container {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .videos-container {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 15px;
+            }
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(10, 10, 26, 0.5);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0096c7;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Latest Meepo Games by Meepoku</h1>
+            <p>Recent Meepo gameplay videos from Meepoku</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div id="videoDisplay">
+            <div class="loading">Loading Meepoku videos...</div>
+        </div>
+        <button id="refreshBtn" class="refresh-btn">Refresh Videos</button>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>Created by a Meepo enthusiast | Dota 2 is a registered trademark of Valve Corporation</p>
+            <p>Not affiliated with Meepoku or Valve</p>
+        </div>
+    </footer>
+
+    <script>
+        // Configuration - UPDATED TO FETCH 6 VIDEOS
+        const YOUTUBE_API_KEY = 'AIzaSyCj_nKsgQSExoOLEYqoMGweW59-bQ3z9F8';
+        const VIDEO_COUNT = 6; // Changed from 4 to 6
+        const PLAYLIST_ID = 'UUhzdFJHwu1l90A677ToxpDA';
+        
+        // DOM elements
+        const videoDisplay = document.getElementById('videoDisplay');
+        const refreshBtn = document.getElementById('refreshBtn');
+        
+        // Fallback video data - UPDATED WITH 6 FALLBACK VIDEOS
+        const FALLBACK_VIDEOS = [
+            {
+                videoId: '9XeNNES5R7E',
+                title: 'Meepo Pro Gameplay - High Rank Match (Fallback 1)',
+                date: new Date().toISOString(),
+                channel: 'Meepoku',
+                description: 'This is fallback content as the live videos could not be loaded.'
+            },
+            {
+                videoId: 'dQw4w9WgXcQ',
+                title: 'Meepo Gameplay - Fallback Video 2',
+                date: new Date(Date.now() - 86400000).toISOString(),
+                channel: 'Meepoku',
+                description: 'Another fallback video example.'
+            },
+            {
+                videoId: 'youtube-video-id-3',
+                title: 'Meepo Dominating - Fallback Video 3',
+                date: new Date(Date.now() - 172800000).toISOString(),
+                channel: 'Meepoku',
+                description: 'Fallback video showing Meepo domination.'
+            },
+            {
+                videoId: 'youtube-video-id-4',
+                title: 'Meepo Strategy Guide - Fallback Video 4',
+                date: new Date(Date.now() - 259200000).toISOString(),
+                channel: 'Meepoku',
+                description: 'Fallback strategy guide for Meepo players.'
+            },
+            {
+                videoId: 'youtube-video-id-5',
+                title: 'Meepo vs Counter Picks - Fallback Video 5',
+                date: new Date(Date.now() - 345600000).toISOString(),
+                channel: 'Meepoku',
+                description: 'How to play Meepo against counter picks.'
+            },
+            {
+                videoId: 'youtube-video-id-6',
+                title: 'Meepo Farming Patterns - Fallback Video 6',
+                date: new Date(Date.now() - 432000000).toISOString(),
+                channel: 'Meepoku',
+                description: 'Optimal farming patterns for Meepo.'
+            }
+        ];
+        
+        // Format date
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+        
+        // Render videos
+        function renderVideos(videos) {
+            if (!videos || videos.length === 0) {
+                showFallbackContent();
+                return;
+            }
+            
+            let videosHTML = '<div class="videos-container">';
+            
+            videos.forEach(video => {
+                videosHTML += `
+                    <div class="video-container">
+                        <div class="video-wrapper">
+                            <iframe src="https://www.youtube.com/embed/${video.videoId}" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen
+                                    loading="lazy"></iframe>
+                        </div>
+                        <div class="video-info">
+                            <h2>${video.title}</h2>
+                            <p class="video-channel">Channel: ${video.channel || 'Unknown'}</p>
+                            <p class="video-date">Uploaded: ${formatDate(video.date)}</p>
+                            <div class="video-description">${video.description || ''}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            videosHTML += '</div>';
+            videoDisplay.innerHTML = videosHTML;
+        }
+        
+        // Show fallback content
+        function showFallbackContent() {
+            videoDisplay.innerHTML = '<div class="error">Could not load the latest videos. Showing fallback content.</div>';
+            renderVideos(FALLBACK_VIDEOS);
+        }
+        
+        // Fetch latest videos from playlist
+        async function fetchLatestVideos() {
+            try {
+                videoDisplay.innerHTML = '<div class="loading">Finding the latest Meepoku videos...</div>';
+                
+                const response = await fetch(
+                    `https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=${VIDEO_COUNT}&playlistId=${PLAYLIST_ID}&key=${YOUTUBE_API_KEY}`
+                );
+                
+                if (!response.ok) throw new Error('Video fetch failed');
+                
+                const data = await response.json();
+                
+                if (!data.items || data.items.length === 0) {
+                    throw new Error('No videos found in this playlist');
+                }
+                
+                return data.items.map(video => ({
+                    videoId: video.snippet.resourceId.videoId,
+                    title: video.snippet.title,
+                    date: video.snippet.publishedAt,
+                    channel: video.snippet.channelTitle,
+                    description: video.snippet.description
+                }));
+            } catch (error) {
+                console.error('Error fetching videos:', error);
+                return null;
+            }
+        }
+        
+        // Main load function
+        async function loadVideos() {
+            try {
+                const videos = await fetchLatestVideos();
+                renderVideos(videos || FALLBACK_VIDEOS);
+            } catch (error) {
+                console.error('Error loading videos:', error);
+                showFallbackContent();
+            }
+        }
+        
+        // Event listeners
+        refreshBtn.addEventListener('click', loadVideos);
+        
+        // Initial load
+        document.addEventListener('DOMContentLoaded', loadVideos);
+    </script>
+</body>
+</html>
